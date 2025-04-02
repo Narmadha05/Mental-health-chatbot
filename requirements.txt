@@ -79,7 +79,7 @@ marshmallow==3.26.1
 matplotlib==3.9.2
 matplotlib-inline==0.1.7
 mccabe 
-mdit-py-plugins @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/mdit-py-plugins_1699559788389/work
+mdit-py-plugins
 mdurl 
 mkl-service==2.4.0
 mkl_fft 
