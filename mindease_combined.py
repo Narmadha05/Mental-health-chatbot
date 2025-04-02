@@ -85,8 +85,8 @@ if selected_option == "Home":
 
 
 
-from langchain.embeddings import HuggingFaceBgeEmbeddings
-from langchain.document_loaders import DirectoryLoader, PyPDFLoader
+from langchain_community.embeddings import HuggingFaceBgeEmbeddings
+from langchain_community.document_loaders import DirectoryLoader, PyPDFLoader
 from langchain import vectorstores
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
@@ -122,6 +122,20 @@ def setup_qa_chain(vector_db, llm):
 
 # Initialize LLM and Vector Database
 llm = initialize_llm()
+
+from langchain.vectorstores import Chroma
+from langchain.embeddings import HuggingFaceBgeEmbeddings
+
+def create_vector_db():
+    # Define embeddings model
+    embeddings = HuggingFaceBgeEmbeddings(model_name='all-mpnet-base-v2')
+
+    # Initialize the vector database and specify the directory
+    vector_db = Chroma(persist_directory="./chroma_db", embedding_function=embeddings)
+
+    return vector_db
+
+
 db_path = "./chroma_db"
 if not os.path.exists(db_path):
     vector_db = create_vector_db()
