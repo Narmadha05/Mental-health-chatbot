@@ -124,7 +124,6 @@ def setup_qa_chain(vector_db, llm):
 llm = initialize_llm()
 
 from langchain.vectorstores import Chroma
-from langchain.embeddings import HuggingFaceBgeEmbeddings
 
 def create_vector_db():
     # Define embeddings model
