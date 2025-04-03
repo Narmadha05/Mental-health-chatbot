@@ -1,136 +1,187 @@
 import streamlit as st
 import random
 import datetime
+import time
 
-# Motivational Prompts, Study Tips, etc.
+# Motivational Prompts
 motivation_prompts = [
-    "Believe in yourself! You are capable of amazing things.",
-    "Every day is a new beginning. Take a deep breath and start again.",
-    "Success is the sum of small efforts, repeated daily.",
-    "Keep going. Everything you need will come to you at the perfect time.",
-    "Difficulties in life are intended to make us better, not bitter.",
-    "You are stronger than you think. Keep pushing forward!",
-    "Your potential is limitless. Never stop exploring your capabilities.",
-    "The only way to achieve the impossible is to believe it is possible.",
-    "Challenges are what make life interesting. Overcoming them is what makes life meaningful.",
-    "You are capable, you are strong, and you can do this!"
+    "Believe in yourself! You are capable of amazing things. 🌟",
+    "Every day is a new beginning. Take a deep breath and start again. 🌅",
+    "Success is the sum of small efforts, repeated daily. 📈",
+    "Keep going. Everything you need will come to you at the perfect time. ⏳",
+    "Difficulties in life are intended to make us better, not bitter. 💪",
+    "You are stronger than you think. Keep pushing forward! 🔥",
+    "Your potential is limitless. Never stop exploring your capabilities. 🚀",
+    "The only way to achieve the impossible is to believe it is possible. 🎯",
+    "Challenges are what make life interesting. Overcoming them is what makes life meaningful. 🏆",
+    "You are capable, you are strong, and you can do this! 💖"
 ]
 
+
+# Anxiety Relief Prompts
 anxiety_relief_prompts = [
-    "Take a deep breath. Inhale for 4 seconds, hold for 4, and exhale for 6.",
-    "Close your eyes and picture your happy place. Stay there for a moment.",
-    "Write down what’s bothering you and set it aside for later.",
-    "Try progressive muscle relaxation – tense each muscle, then relax it.",
-    "Listen to calming music or nature sounds to ease your mind.",
-    "Step outside and take a short walk to clear your thoughts.",
-    "Drink a warm cup of tea or water. Hydration helps relaxation.",
-    "Focus on the present. What are five things you can see and hear?",
-    "Talk to someone you trust about what’s making you anxious.",
-    "Remind yourself: You have overcome challenges before, and you will again."
+    "Take a deep breath. Inhale for 4 seconds, hold for 4, and exhale for 6. 🌬",
+    "Close your eyes and picture your happy place. Stay there for a moment. 🌄",
+    "Write down what’s bothering you and set it aside for later. ✍",
+    "Try progressive muscle relaxation – tense each muscle, then relax it. 🧘",
+    "Listen to calming music or nature sounds to ease your mind. 🎵",
+    "Step outside and take a short walk to clear your thoughts. 🚶",
+    "Drink a warm cup of tea or water. Hydration helps relaxation. 🍵",
+    "Focus on the present. What are five things you can see and hear? 👀👂",
+    "Talk to someone you trust about what’s making you anxious. 💬",
+    "Remind yourself: You have overcome challenges before, and you will again. 🌟"
 ]
 
 
+# Study Tips
 study_tips = [
-    "Use the Pomodoro technique – study for 25 mins, take a 5-min break.",
-    "Summarize notes in your own words to enhance understanding.",
-    "Teach what you learn to someone else. It helps retain information!",
-    "Practice active recall – test yourself instead of rereading notes.",
-    "Break large tasks into smaller chunks to avoid feeling overwhelmed.",
-    "Use mnemonic devices to memorize complex concepts.",
-    "Find a distraction-free study environment for better focus.",
-    "Use visual aids like mind maps and diagrams to remember better.",
-    "Get enough sleep! Rest is crucial for memory retention.",
-    "Stay hydrated and take regular breaks to keep your mind fresh."
+    "Use the Pomodoro technique – study for 25 mins, take a 5-min break. ⏳",
+    "Teach what you learn to someone else. It helps retain information! 🗣",
+    "Summarize notes in your own words to enhance understanding. 📝",
+    "Practice active recall – test yourself instead of rereading notes. 📚",
+    "Break large tasks into smaller chunks to avoid feeling overwhelmed. 🏗",
+    "Use mnemonic devices to memorize complex concepts. 🧠",
+    "Find a distraction-free study environment for better focus. 🎧",
+    "Use visual aids like mind maps and diagrams to remember better. 🖼",
+    "Get enough sleep! Rest is crucial for memory retention. 😴",
+    "Stay hydrated and take regular breaks to keep your mind fresh. 💧"
 ]
 
+
+# Self-care Tips
 self_care_tips = [
-    "Take a 5-minute stretch break to ease your muscles.",
-    "Maintain a good posture while studying to avoid back pain.",
-    "Eat brain-boosting foods like nuts, fruits, and dark chocolate.",
-    "Avoid excessive caffeine; try herbal tea instead.",
-    "Get sunlight exposure to boost your mood and energy levels.",
-    "Set realistic goals and celebrate small achievements.",
-    "Listen to calming music while studying to reduce stress.",
-    "Practice gratitude – write down three things you are grateful for.",
-    "Take a deep breath and remind yourself it’s okay to take breaks.",
-    "Limit screen time before bed to ensure better sleep quality."
+    "Take a 5-minute stretch break to ease your muscles. 🏋",
+    "Maintain a good posture while studying to avoid back pain. 🪑",
+    "Eat brain-boosting foods like nuts, fruits, and dark chocolate. 🍫",
+    "Avoid excessive caffeine; try herbal tea instead. ☕",
+    "Get sunlight exposure to boost your mood and energy levels. ☀",
+    "Set realistic goals and celebrate small achievements. 🎉",
+    "Listen to calming music while studying to reduce stress. 🎶",
+    "Practice gratitude – write down three things you are grateful for. 💖",
+    "Take a deep breath and remind yourself it’s okay to take breaks. 🌿",
+    "Limit screen time before bed to ensure better sleep quality. 📵"
 ]
+
+
 
 # Streamlit App Layout
 st.set_page_config(page_title="MindEase", layout="wide")
 st.title("🌿 Welcome to MindEase")
 st.subheader("Your personal companion for motivation, study tips, and self-care.")
 
-st.sidebar.title("MindEase Tools")
-if st.sidebar.button("Need a boost? Inspire Me!"):
-    st.sidebar.write(random.choice(motivation_prompts))
+# Sidebar
+st.sidebar.markdown("""
+    <style>
+        [data-testid="stSidebar"] {
+            background-color: #E6E6FA;
+        }
+        .sidebar-title {
+            color: black;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .sidebar-text {
+            color: black;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
-if st.sidebar.button("Feeling anxious? Anxiety Relief"):
-    st.sidebar.write(random.choice(anxiety_relief_prompts))
+st.sidebar.markdown("<span class='sidebar-title'>💜 MindEase Tools</span>", unsafe_allow_html=True)
 
-if st.sidebar.button("Study Tips"):
-    st.sidebar.write(random.choice(study_tips))
+if st.sidebar.button("💡 Need a boost? Inspire Me!"):
+    st.sidebar.markdown(f"<span class='sidebar-text'>{random.choice(motivation_prompts)}</span>", unsafe_allow_html=True)
 
-if st.sidebar.button("Self-care Tips"):
-    st.sidebar.write(random.choice(self_care_tips))
+if st.sidebar.button("😌 Feeling anxious? Anxiety Relief"):
+    st.sidebar.markdown(f"<span class='sidebar-text'>{random.choice(anxiety_relief_prompts)}</span>", unsafe_allow_html=True)
 
-selected_option = st.sidebar.radio("Navigation", ["Home", "Chatbot"])
+if st.sidebar.button("📖 Study Tips"):
+    st.sidebar.markdown(f"<span class='sidebar-text'>{random.choice(study_tips)}</span>", unsafe_allow_html=True)
 
-import time
+if st.sidebar.button("💆 Self-care Tips"):
+    st.sidebar.markdown(f"<span class='sidebar-text'>{random.choice(self_care_tips)}</span>", unsafe_allow_html=True)
 
-if selected_option == "Home":
-    st.write("Explore the tools in the sidebar or interact with our chatbot!")
-    st.write("🕒 **Focus Timer:** Use the timer below to stay productive.")
-    
-    # Timer Functionality
-    timer_input = st.number_input("Set timer (minutes):", min_value=1, max_value=120, value=25, step=1)
-    if st.button("Start Timer"):
-        st.write(f"Timer started for {timer_input} minutes. Stay focused!")
+# Timer Functionality with Styled Sidebar
+st.sidebar.markdown("<span class='sidebar-title'>⏳ Study Timer</span>", unsafe_allow_html=True)
+timer_input = st.sidebar.number_input(
+    "Set timer (minutes):", min_value=1, max_value=120, value=25, step=1, key="timer_input"
+)
+if st.sidebar.button("Start Timer", key="start_timer"):
+    st.sidebar.markdown(
+        f"<span class='sidebar-text'>Timer started for {timer_input} minutes. Stay focused! 🎯</span>",
+        unsafe_allow_html=True,
+    )
 
-    # Study Plan Generator
-    st.subheader("📖 Study Plan Generator")
+# Study Plan Generator in Sidebar
+st.sidebar.markdown("<span class='sidebar-title'>📋 Study Plan Generator</span>", unsafe_allow_html=True)
+# Input: Total study time
+total_study_time = st.sidebar.number_input(
+    "Total study time (hours):", min_value=1, step=1, value=4, key="total_study_time"
+)
 
-    # Input: Total study time (in hours)
-    total_study_time = st.number_input("Total study time (in hours):", min_value=1, step=1, value=4)
+# Input: Number of subjects
+num_subjects = st.sidebar.number_input(
+    "Number of subjects:", min_value=1, max_value=10, step=1, value=3, key="num_subjects"
+)
 
-    # Input: Number of subjects
-    num_subjects = st.number_input("Number of subjects:", min_value=1, max_value=10, step=1, value=3)
+# Dynamic subject inputs and difficulty levels
+subjects = []
+difficulty_levels = []
 
-    # Dynamic input for subject names and difficulty levels
-    subjects = []
-    difficulty_levels = []
+for i in range(int(num_subjects)):
+    subject_name = st.sidebar.text_input(
+        f"Enter Subject {i + 1}:", key=f"subject_name_{i}"
+    )
+    difficulty = st.sidebar.selectbox(
+        f"Difficulty for {subject_name or f'Subject {i + 1}'}:",
+        options=["Easy", "Medium", "Hard"],
+        key=f"difficulty_{i}",
+    )
+    subjects.append(subject_name)
+    difficulty_levels.append(difficulty)
 
-    for i in range(int(num_subjects)):
-        subject_name = st.text_input(f"Enter name for Subject {i+1}:", key=f"subject_name_{i}")
-        difficulty = st.selectbox(
-            f"Select difficulty level for {subject_name if subject_name else f'Subject {i+1}'}:",
-            options=["Easy", "Medium", "Hard"], key=f"difficulty_{i}"
-        )
-        subjects.append(subject_name)
-        difficulty_levels.append(difficulty)
+# Generate Study Plan Button
+if st.sidebar.button("Generate Study Plan", key="generate_study_plan"):
+    if not all(subjects):  # Check for empty subject names
+        st.sidebar.error("Please provide names for all subjects.")
+    else:
+        # Weight Mapping
+        difficulty_weights = {"Easy": 1, "Medium": 2, "Hard": 3}
+        total_weight = sum(difficulty_weights[difficulty] for difficulty in difficulty_levels)
+        total_study_minutes = total_study_time * 60
 
-    # Difficulty weight mapping
-    difficulty_weights = {"Easy": 1, "Medium": 2, "Hard": 3}
+        # Generate and Display Study Plan
+        study_plan = {}
+        for i, subject in enumerate(subjects):
+            allocated_time = (difficulty_weights[difficulty_levels[i]] / total_weight) * total_study_minutes
+            study_plan[subject] = f"{int(allocated_time)} minutes"
 
-    # Generate Study Plan Button
-    if st.button("Generate Study Plan"):
-        if not all(subjects):  # Ensure all subject names are provided
-            st.error("Please fill in all subject names.")
-        else:
-            # Calculate weighted time allocation
-            total_weight = sum(difficulty_weights[difficulty] for difficulty in difficulty_levels)
-            total_study_minutes = total_study_time * 60
+        st.sidebar.markdown("**Your Study Plan:**", unsafe_allow_html=True)
+        for subject, time in study_plan.items():
+            st.sidebar.markdown(f"- **{subject}:** {time}", unsafe_allow_html=True)
 
-            # Create study plan
-            study_plan = {}
-            for i, subject in enumerate(subjects):
-                allocated_time = (difficulty_weights[difficulty_levels[i]] / total_weight) * total_study_minutes
-                study_plan[subject] = f"{int(allocated_time)} minutes"
 
-            # Display the study plan
-            st.write("**Your Personalized Study Plan:**")
-            for subject, time in study_plan.items():
-                st.write(f"- **{subject}:** {time}")
+
+# Emotion-Based Prompt System
+st.subheader("How are you feeling today?")
+total_emotion_prompts = {
+    "Happy": ["Keep spreading the joy! Happiness is contagious. 😊", "Enjoy the little things in life! 🌼", "Happiness shared is happiness doubled. 💕", "Smile more, worry less. 😊", "Every moment is a fresh beginning. 🌟"],
+    "Sad": ["It’s okay to feel sad. Take it one step at a time. 💙", "This too shall pass. 🌈", "You are stronger than you think. 💪", "Tough times never last, but tough people do. 🏆", "Let yourself feel, then let yourself heal. 💖"],
+    "Anxious": anxiety_relief_prompts,
+    "Motivated": ["Keep up the great work! Channel your motivation into your goals. 🚀", "Your hard work will pay off. 💰", "Success is built on consistency. 📈", "You’ve got this! 🔥", "Dream big, work hard, stay focused. 🎯"],
+    "Frustrated": ["Take a deep breath. A short break might help clear your mind. 🌬", "Let go of what you can’t control. 🍃", "One step at a time, you’ll get there. 🏁", "Obstacles are stepping stones to growth. ⛰", "Frustration is temporary, progress is permanent. 💡"],
+    "Tired": ["Rest is just as important as work. Recharge yourself. 💤", "Listen to your body, it’s okay to slow down. 🛌", "Energy comes from balance. Take care of yourself. ⚖", "Small breaks can make a big difference. ⏳", "You deserve to rest and recover. 🌙"]
+}
+
+emotion = st.selectbox("Select your emotion:", list(total_emotion_prompts.keys()))
+st.write(random.choice(total_emotion_prompts[emotion]))
+
+# Daily Affirmations
+st.subheader("✨ Daily Affirmation")
+current_date = datetime.datetime.now().day
+affirmation = motivation_prompts[current_date % len(motivation_prompts)]
+st.markdown(f'<div style="color:black; font-size:18px; padding:10px; border-radius:10px; background-color:#F5F5F5;">{affirmation}</div>', unsafe_allow_html=True)
+
+
 
 
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
