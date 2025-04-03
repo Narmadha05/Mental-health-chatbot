@@ -81,19 +81,56 @@ import time
 if selected_option == "Home":
     st.write("Explore the tools in the sidebar or interact with our chatbot!")
     st.write("🕒 **Focus Timer:** Use the timer below to stay productive.")
-
+    
+    # Timer Functionality
     timer_input = st.number_input("Set timer (minutes):", min_value=1, max_value=120, value=25, step=1)
-    start_timer = st.button("Start Timer")
-
-    if start_timer:
+    if st.button("Start Timer"):
         st.write(f"Timer started for {timer_input} minutes. Stay focused!")
-        for remaining in range(timer_input * 60, 0, -1):
-            mins, secs = divmod(remaining, 60)
-            timer_display = f"{mins:02d}:{secs:02d}"
-            st.write(f"⏳ Time Remaining: {timer_display}")
-            time.sleep(1)  # Sleep for 1 second to simulate countdown
-            st.empty()  # Clears the previous timer message
-        st.write("✅ Timer complete! Great job!")
+
+    # Study Plan Generator
+    st.subheader("📖 Study Plan Generator")
+
+    # Input: Total study time (in hours)
+    total_study_time = st.number_input("Total study time (in hours):", min_value=1, step=1, value=4)
+
+    # Input: Number of subjects
+    num_subjects = st.number_input("Number of subjects:", min_value=1, max_value=10, step=1, value=3)
+
+    # Dynamic input for subject names and difficulty levels
+    subjects = []
+    difficulty_levels = []
+
+    for i in range(int(num_subjects)):
+        subject_name = st.text_input(f"Enter name for Subject {i+1}:", key=f"subject_name_{i}")
+        difficulty = st.selectbox(
+            f"Select difficulty level for {subject_name if subject_name else f'Subject {i+1}'}:",
+            options=["Easy", "Medium", "Hard"], key=f"difficulty_{i}"
+        )
+        subjects.append(subject_name)
+        difficulty_levels.append(difficulty)
+
+    # Difficulty weight mapping
+    difficulty_weights = {"Easy": 1, "Medium": 2, "Hard": 3}
+
+    # Generate Study Plan Button
+    if st.button("Generate Study Plan"):
+        if not all(subjects):  # Ensure all subject names are provided
+            st.error("Please fill in all subject names.")
+        else:
+            # Calculate weighted time allocation
+            total_weight = sum(difficulty_weights[difficulty] for difficulty in difficulty_levels)
+            total_study_minutes = total_study_time * 60
+
+            # Create study plan
+            study_plan = {}
+            for i, subject in enumerate(subjects):
+                allocated_time = (difficulty_weights[difficulty_levels[i]] / total_weight) * total_study_minutes
+                study_plan[subject] = f"{int(allocated_time)} minutes"
+
+            # Display the study plan
+            st.write("**Your Personalized Study Plan:**")
+            for subject, time in study_plan.items():
+                st.write(f"- **{subject}:** {time}")
 
 
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
