@@ -125,20 +125,28 @@ llm = initialize_llm()
 
 from langchain.vectorstores import Chroma
 
+
 def create_vector_db():
     # Define embeddings model
     embeddings = HuggingFaceBgeEmbeddings(model_name='all-mpnet-base-v2')
 
     # Initialize the vector database and specify the directory
     vector_db = Chroma(persist_directory="./chroma_db", embedding_function=embeddings)
-
     return vector_db
 
 
 db_path = "./chroma_db"
+
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 if not os.path.exists(db_path):
+    # Create and initialize the vector database
     vector_db = create_vector_db()
 else:
+    # Load existing vector database
     embeddings = HuggingFaceBgeEmbeddings(model_name='all-mpnet-base-v2')
     vector_db = vectorstores.Chroma(persist_directory=db_path, embedding_function=embeddings)
 qa_chain = setup_qa_chain(vector_db, llm)
@@ -152,22 +160,20 @@ def chatbot_response(user_input, history=[]):
     return response, history
 
     
-    # Initialize Chat History
+# Initialize Chat History
 if "chat_history" not in st.session_state:
     st.session_state["chat_history"] = []
-    
-    # User Input
+
+# User Input
 user_message = st.text_input("You:", placeholder="Ask me anything!", key="user_input")
 if user_message:
-    bot_response, st.session_state["chat_history"] = chatbot_response(user_message, 
-    st.session_state["chat_history"])
-    # Directly display the updated chat history instead of rerunning the script
+    bot_response, st.session_state["chat_history"] = chatbot_response(user_message, st.session_state["chat_history"])
+    st.session_state["chat_history"].append(("You", user_message))  # Store user message
+    st.session_state["chat_history"].append(("Bot", bot_response))  # Store bot response
+
+# Display Chat History
 for sender, message in st.session_state["chat_history"]:
     if sender == "You":
-        st.write(f"**{sender}:** {message}")
-    else:
-        st.write(f"🤖 **{sender}:** {message}")
-    
-    # Display Chat History
-for sender, message in st.session_state["chat_history"]:
-    st.write(f"**{sender}:** {message}")
+        st.markdown(f"**{sender}:** {message}")
+    elif sender == "Bot":
+        st.markdown(f"🤖 **{sender}:** {message}")
