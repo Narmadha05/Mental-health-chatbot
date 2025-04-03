@@ -76,13 +76,24 @@ if st.sidebar.button("Self-care Tips"):
 
 selected_option = st.sidebar.radio("Navigation", ["Home", "Chatbot"])
 
+import time
+
 if selected_option == "Home":
     st.write("Explore the tools in the sidebar or interact with our chatbot!")
     st.write("🕒 **Focus Timer:** Use the timer below to stay productive.")
-    timer_input = st.number_input("Set timer (minutes):", min_value=1, max_value=120, value=25, step=1)
-    if st.button("Start Timer"):
-        st.write(f"Timer started for {timer_input} minutes. Stay focused!")
 
+    timer_input = st.number_input("Set timer (minutes):", min_value=1, max_value=120, value=25, step=1)
+    start_timer = st.button("Start Timer")
+
+    if start_timer:
+        st.write(f"Timer started for {timer_input} minutes. Stay focused!")
+        for remaining in range(timer_input * 60, 0, -1):
+            mins, secs = divmod(remaining, 60)
+            timer_display = f"{mins:02d}:{secs:02d}"
+            st.write(f"⏳ Time Remaining: {timer_display}")
+            time.sleep(1)  # Sleep for 1 second to simulate countdown
+            st.empty()  # Clears the previous timer message
+        st.write("✅ Timer complete! Great job!")
 
 
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
